@@ -1,4 +1,5 @@
 import { getPrefectureCodeList } from "../lib/component/Prefecture/prefecturecode";
+import Graph from "../lib/component/Prefecture/graph";
 
 type Props = {
   prefectureCodeList: {
@@ -19,7 +20,7 @@ export async function getStaticProps() {
 export default function Home({ prefectureCodeList }: Props) {
   return (
     <>
-      <h1>都道府県別の人口データグラフ</h1>
+      <h1>都道府県別の総人口推移グラフ</h1>
       <section>
         <ul>
           {prefectureCodeList.map(({ prefCode, prefName }) => (
@@ -30,6 +31,8 @@ export default function Home({ prefectureCodeList }: Props) {
           ))}
         </ul>
       </section>
+
+      <Graph />
     </>
   );
 }
