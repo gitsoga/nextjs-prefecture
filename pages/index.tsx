@@ -25,8 +25,8 @@ export default function Home({ prefectureCodeList }: Props) {
         <ul>
           {prefectureCodeList.map(({ prefCode, prefName }) => (
             <li key={prefCode}>
-              <input type="checkbox" id={prefCode} name="" />
-              <label for={prefCode}>{prefName}</label>
+              <input type="checkbox" id="{prefCode}" name="" />
+              <label htmlFor="{prefCode}">{prefName}</label>
             </li>
           ))}
         </ul>
