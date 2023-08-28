@@ -1,6 +1,7 @@
 import { getPrefectureCodeList } from "../lib/component/Prefecture/prefecturecode";
 import { getPrefecturePopulation } from "../lib/component/Prefecture/prefecturepopulation";
 import Graph from "../lib/component/Prefecture/graph";
+import React, { useState } from "react";
 
 type Props = {
   prefectureCodeList: {
@@ -18,16 +19,16 @@ export async function getStaticProps() {
   };
 }
 
-async function handleClicked(prefCode: number) {
-  const prefecturePopulation = await getPrefecturePopulation(prefCode);
-  return {
-    props: {
-      prefecturePopulation,
-    },
-  };
-}
-
 export default function Home({ prefectureCodeList }: Props) {
+  const [checkPrefName, setCheckPrefName] = useState<string>("");
+  const [populationdata, setPopulationdata] = useState<[]>([]);
+
+  async function handleClicked(prefCode: number, prefName: string) {
+    const prefecturePopulation = await getPrefecturePopulation(prefCode);
+    setCheckPrefName(prefName);
+    setPopulationdata(prefecturePopulation);
+  }
+
   return (
     <>
       <h1>都道府県別の総人口推移グラフ</h1>
@@ -38,8 +39,8 @@ export default function Home({ prefectureCodeList }: Props) {
               <input
                 type="checkbox"
                 id="{prefCode}"
-                name=""
-                onChange={(event) => handleClicked(prefCode)}
+                name="{prefCode}"
+                onChange={(event) => handleClicked(prefCode, prefName)}
               />
               <label htmlFor="{prefCode}">{prefName}</label>
             </li>
@@ -47,7 +48,7 @@ export default function Home({ prefectureCodeList }: Props) {
         </ul>
       </section>
 
-      <Graph />
+      <Graph prefName={checkPrefName} populationdata={populationdata} />
     </>
   );
 }

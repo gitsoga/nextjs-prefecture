@@ -4,23 +4,33 @@ import HighchartsReact from "highcharts-react-official";
 
 export async function getStaticProps() {}
 
-export default function Graph(props: HighchartsReact.Props) {
+type PopProps = {
+  prefName: string;
+  populationdata: any[];
+  //populationdata: { label: string; data: { year: number; value: number }[];
+};
+
+export default function Graph({ prefName, populationdata }: PopProps) {
+  const props = HighchartsReact.Props;
+  let series: Highcharts.SeriesOptionsType[] = [];
+
+  for (let post of populationdata) {
+    if (post.label == "総人口") {
+      series.push({
+        type: "line",
+        name: prefName,
+        data: post.data.map(
+          (data: { year: number; value: number }) => data.value
+        ),
+      });
+    }
+  }
+
   const options: Highcharts.Options = {
     title: {
       text: "都道府県別の総人口推移グラフ",
     },
-    series: [
-      {
-        type: "line",
-        name: "北海道",
-        data: [1, 2, 3],
-      },
-      {
-        type: "line",
-        name: "沖縄県",
-        data: [5, 10, 9],
-      },
-    ],
+    series: series,
   };
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
