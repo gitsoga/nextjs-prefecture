@@ -37,7 +37,7 @@ export default function Home({ prefectureCodeList }: Props) {
           {prefectureCodeList.map(({ prefCode, prefName }) => (
             <li key={prefCode}>
               <input
-                type="checkbox"
+                type="radio"
                 id="{prefCode}"
                 name="{prefCode}"
                 onChange={(event) => handleClicked(prefCode, prefName)}
