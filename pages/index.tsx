@@ -31,11 +31,11 @@ export default function Home({ prefectureCodeList }: Props) {
 
   return (
     <>
-      <h1>都道府県別の総人口推移グラフ</h1>
-      <section>
-        <ul>
+      <h1 className="text-2xl font-bold pb-4">都道府県別の総人口推移グラフ</h1>
+      <section className="w-3/4">
+        <ul className="grid grid-cols-10">
           {prefectureCodeList.map(({ prefCode, prefName }) => (
-            <li key={prefCode}>
+            <li className="col-span-1" key={prefCode}>
               <input
                 type="radio"
                 id="{prefCode}"
